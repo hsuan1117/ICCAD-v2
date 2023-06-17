@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
         if (!entry) {
             throw std::exception();
         }
+
         entry->SetPassword("0000");
         std::istream *decompressStream = entry->GetDecompressionStream();
         ofstream out("decompressed.bin");

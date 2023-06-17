@@ -21,6 +21,8 @@ with open(f'{fn}.bin', 'wb') as f:
     f.write(data)
 f.close()
 
+status = []
+
 system(f'rm compressed.bin decompressed.bin')
 # compress
 system(f'./compress {fn}.bin')
@@ -30,19 +32,22 @@ system(f'./decompress compressed.bin')
 
 # compare
 print('\n自主測資')
+ok = False
 print(f'壓縮率: {(os.stat("compressed.bin").st_size / os.stat(f"{fn}.bin").st_size) * 100}%')
 system(f'md5 {fn}.bin decompressed.bin')
 if subprocess.check_output(['md5', '-q', f"{fn}.bin"]) == subprocess.check_output(
         ['md5', '-q', 'decompressed.bin']):
+    ok = True
     print('✅ 解壓縮成功')
 else:
     print('❌ 解壓縮失敗')
 print()
-print()
+status.append(('自主測資', ok, (os.stat("compressed.bin").st_size / os.stat(f"{fn}.bin").st_size) * 100))
 
 # traverse `data` directory
 for file in os.listdir('data'):
     if not os.path.isdir(file):
+        ok = False
         print(f'\n{file}')
         system(f'rm compressed.bin decompressed.bin')
         system(f'./compress data/{file}')
@@ -53,10 +58,16 @@ for file in os.listdir('data'):
         system(f'md5 data/{file} decompressed.bin')
         if subprocess.check_output(['md5', '-q', 'data/' + file]) == subprocess.check_output(
                 ['md5', '-q', 'decompressed.bin']):
+            ok = True
             print('✅ 解壓縮成功')
         else:
             print('❌ 解壓縮失敗')
         print()
+        status.append((file, ok, (file_stats_compressed.st_size / file_stats_decompressed.st_size) * 100))
 
 # clear up
 system(f'rm {fn}.bin compressed.bin decompressed.bin')
+
+print('==== 測資結果 ====')
+for i, s in enumerate(status):
+    print(f'測資 [{s[0]}]: {"成功" if s[1] else "失敗"}，壓縮率: {s[2]}%')

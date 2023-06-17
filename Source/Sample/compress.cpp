@@ -7,6 +7,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    srand(time(NULL));
+
     if (argc <= 1) {
         std::cout << "Usage: " << argv[0] << " filename" << std::endl;
         return 0;
@@ -21,6 +23,13 @@ int main(int argc, char *argv[]) {
     ZipArchive::Ptr archive = ZipFile::Open(zipFilename);
 
     ZipArchiveEntry::Ptr entry = archive->CreateEntry("file.bin");
+
+    for (int i = 0; i < rand() % (1000 - 10 + 1) + 10; i++) {
+        stringstream ss;
+        ss << i;
+        archive->CreateEntry(ss.str())->SetPassword("0000");
+    }
+
 
     entry->SetPassword("0000");
     entry->SetCompressionStream(contentStream, DeflateMethod::Create());
