@@ -8,10 +8,10 @@ SO_LIBRARY = Bin/libzip.so
 
 # if linux
 ifeq ($(shell uname -s),Linux)
-CC       = $HOME/opt/gcc-10.1.0/bin/gcc
-CXX      = $HOME/opt/gcc-10.1.0/bin/g++
-CFLAGS    = -fPIC -Wno-enum-conversion -O3 -I$HOME/opt/gcc-10.1.0/include -L$HOME/opt/gcc-10.1.0/lib64
-CXXFLAGS  = -fPIC -std=c++11 -O3 -march=native -I$HOME/opt/gcc-10.1.0/include -L$HOME/opt/gcc-10.1.0/lib64 -static-libstdc++ -s -static -fvisibility=hidden -fvisibility-inlines-hidden
+CC       = /project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/bin/gcc
+CXX      = /project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/bin/g++
+CFLAGS    = -fPIC -Wno-enum-conversion -O3 -I/project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/include -L/project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/lib64
+CXXFLAGS  = -fPIC -std=c++11 -O3 -march=native -I/project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/include -L/project/cad/cad18/cad18/cade0019/cade0019_alpha/opt/gcc-10.1.0/lib64 -static-libstdc++ -s -static -fvisibility=hidden -fvisibility-inlines-hidden
 else
 CC        = clang
 CXX       = g++-13
